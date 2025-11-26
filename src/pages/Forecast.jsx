@@ -13,7 +13,25 @@ export default function Forecast() {
 
   useEffect(() => {
     getForecast(normalizedCity)
-      .then((res) => setForecast(res.list || []))
+      .then((res) => {
+        const list = res.list || [];
+
+        // Group by day (YYYY-MM-DD)
+        const groups = {};
+        list.forEach((item) => {
+          const day = item.dt_txt.split(" ")[0];
+          if (!groups[day]) groups[day] = [];
+          groups[day].push(item);
+        });
+
+        // Take the *midday forecast* for each day
+        const daily = Object.values(groups).map((dayArr) => {
+          const midday = dayArr.find((i) => i.dt_txt.includes("12:00:00"));
+          return midday || dayArr[Math.floor(dayArr.length / 2)];
+        });
+
+        setForecast(daily);
+      })
       .catch((err) => setError(err.message));
   }, [normalizedCity]);
 
@@ -26,8 +44,7 @@ export default function Forecast() {
         5-Day Forecast — {normalizedCity}
       </h1>
 
-      {/* Forecast grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {forecast.map((item) => (
           <ForecastCard key={item.dt} item={item} />
         ))}
