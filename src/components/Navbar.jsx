@@ -13,26 +13,30 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-700 text-white p-4 shadow-md">
-      <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
-        <Link to="/" className="text-2xl font-bold tracking-wide">
-          🔵 SkyPulse
+    <nav className="bg-blue-700 text-white py-3 shadow-md">
+      <div className="max-w-5xl mx-auto px-4 flex items-center justify-between gap-4">
+        <Link
+          to="/"
+          className="text-2xl font-bold tracking-wide flex items-center gap-2"
+        >
+          <span className="text-3xl">🔵</span>
+          <span>SkyPulse</span>
         </Link>
 
         <form onSubmit={handleSearch} className="flex gap-2">
           <input
             type="text"
             placeholder="Search city..."
-            className="px-3 py-1 rounded text-black"
+            className="px-3 py-1 rounded text-black text-sm"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="bg-white text-blue-700 font-semibold px-3 py-1 rounded">
+          <button className="bg-white text-blue-700 font-semibold px-3 py-1 rounded text-sm">
             Search
           </button>
         </form>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 text-sm">
           <Link to="/">Home</Link>
           <Link to="/favorites">Favorites</Link>
         </div>

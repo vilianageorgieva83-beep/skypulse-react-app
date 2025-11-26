@@ -10,17 +10,15 @@ export default function CityWeather() {
   useEffect(() => {
     getCurrentWeather(name)
       .then(setWeather)
-      .catch((err) => setError(err.message));
+      .catch((e) => setError(e.message));
   }, [name]);
 
   if (error) return <p className="text-red-600">{error}</p>;
-
   if (!weather) return <p>Loading {name} weather…</p>;
 
   return (
-    <div>
+    <section>
       <h1 className="text-3xl font-bold mb-4">{weather.name}</h1>
-
       <div className="bg-white p-6 rounded-xl shadow max-w-md space-y-2">
         <p className="text-2xl font-semibold">
           {Math.round(weather.main.temp)}°C
@@ -29,7 +27,8 @@ export default function CityWeather() {
           {weather.weather[0].description}
         </p>
         <p className="text-sm text-slate-500">
-          Humidity {weather.main.humidity}%
+          Feels like {Math.round(weather.main.feels_like)}°C · Humidity{" "}
+          {weather.main.humidity}%
         </p>
       </div>
 
@@ -39,6 +38,6 @@ export default function CityWeather() {
       >
         View 5-day forecast →
       </Link>
-    </div>
+    </section>
   );
 }

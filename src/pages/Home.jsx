@@ -1,28 +1,40 @@
 import { useEffect, useState } from "react";
-import CityCard from "../components/CityCard";
 import { getCurrentWeather } from "../services/WeatherService";
+import CityCard from "../components/CityCard";
 
-const CITIES = ["Luxembourg", "Varna", "Athens"];
+const TRACKED_CITIES = ["Luxembourg", "Varna", "Athens"];
 
 export default function Home() {
   const [data, setData] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    CITIES.forEach(async (city) => {
-      const result = await getCurrentWeather(city);
-      setData((prev) => ({ ...prev, [city]: result }));
-    });
+    async function load() {
+      try {
+        const results = await Promise.all(
+          TRACKED_CITIES.map((c) => getCurrentWeather(c))
+        );
+        const map = {};
+        TRACKED_CITIES.forEach((c, i) => {
+          map[c] = results[i];
+        });
+        setData(map);
+      } catch (e) {
+        setError(e.message);
+      }
+    }
+    load();
   }, []);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Weather Overview</h1>
-
-      <div className="grid md:grid-cols-3 gap-4">
-        {CITIES.map((city) => (
+    <section>
+      <h2 className="text-2xl font-bold mb-4">Tracked Cities</h2>
+      {error && <p className="text-red-600 mb-4">{error}</p>}
+      <div className="grid gap-4 md:grid-cols-3">
+        {TRACKED_CITIES.map((city) => (
           <CityCard key={city} city={city} data={data[city]} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
