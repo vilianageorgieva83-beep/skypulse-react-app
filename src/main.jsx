@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       { path: "city/:name", element: <CityWeather /> },
       { path: "forecast/:name", element: <Forecast /> },
       { path: "favorites", element: <Favorites /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
