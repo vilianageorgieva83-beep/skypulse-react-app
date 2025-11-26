@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { normalizeCityName } from "../utils/normalize";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
@@ -8,7 +9,11 @@ export default function Navbar() {
   function handleSearch(e) {
     e.preventDefault();
     if (!query.trim()) return;
-    navigate(`/city/${query.trim()}`);
+
+    // Normalize city name (Capital Letters Each Word)
+    const normalized = normalizeCityName(query);
+
+    navigate(`/city/${normalized}`);
     setQuery("");
   }
 
