@@ -1,3 +1,5 @@
+import { normalizeCityName } from "./normalize";
+
 export function loadFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
 }
@@ -7,19 +9,21 @@ export function saveFavorites(list) {
 }
 
 export function toggleFavorite(city) {
+  const normalized = normalizeCityName(city);
   const saved = loadFavorites();
 
-  if (saved.includes(city)) {
-    const updated = saved.filter((c) => c !== city);
+  if (saved.includes(normalized)) {
+    const updated = saved.filter((c) => c !== normalized);
     saveFavorites(updated);
     return updated;
   }
 
-  const updated = [...saved, city];
+  const updated = [...saved, normalized];
   saveFavorites(updated);
   return updated;
 }
 
 export function isFavorite(city) {
-  return loadFavorites().includes(city);
+  const normalized = normalizeCityName(city);
+  return loadFavorites().includes(normalized);
 }

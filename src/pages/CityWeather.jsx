@@ -2,26 +2,31 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCurrentWeather } from "../services/WeatherService";
 import { isFavorite, toggleFavorite } from "../utils/Favorites";
+import { normalizeCityName } from "../utils/normalize";
 
 export default function CityWeather() {
   const { name } = useParams();
+
+  // Normalize only for display
+  const normalizedCity = normalizeCityName(name);
+
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
-  const [favorite, setFavorite] = useState(isFavorite(name));
+  const [favorite, setFavorite] = useState(isFavorite(name)); // raw name
 
   useEffect(() => {
-    getCurrentWeather(name)
+    getCurrentWeather(normalizedCity)
       .then(setWeather)
       .catch((e) => setError(e.message));
-  }, [name]);
+  }, [normalizedCity]);
 
   function handleToggleFavorite() {
-    const updated = toggleFavorite(name);
-    setFavorite(updated.includes(name));
+    const updated = toggleFavorite(name); // input (no normalization)
+    setFavorite(updated.includes(normalizedCity));
   }
 
   if (error) return <p className="text-red-600">{error}</p>;
-  if (!weather) return <p>Loading {name} weather…</p>;
+  if (!weather) return <p>Loading {normalizedCity} weather…</p>;
 
   const iconUrl = weather.weather?.[0]?.icon
     ? `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
@@ -29,8 +34,8 @@ export default function CityWeather() {
 
   return (
     <section>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">{weather.name}</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">{normalizedCity}</h1>
 
         <button
           onClick={handleToggleFavorite}
@@ -41,8 +46,11 @@ export default function CityWeather() {
         </button>
       </div>
 
+      {/* WEATHER BOX */}
       <div className="bg-white p-6 rounded-xl shadow max-w-md flex items-center gap-4">
-        {iconUrl && <img src={iconUrl} className="w-20 h-20" />}
+        {iconUrl && (
+          <img src={iconUrl} className="w-20 h-20" alt="Weather icon" />
+        )}
 
         <div className="space-y-1">
           <p className="text-2xl font-semibold">
@@ -59,7 +67,7 @@ export default function CityWeather() {
       </div>
 
       <Link
-        to={`/forecast/${name}`}
+        to={`/forecast/${normalizedCity}`}
         className="block mt-6 text-blue-600 underline text-sm"
       >
         View 5-day forecast →
