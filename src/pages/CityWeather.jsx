@@ -5,27 +5,39 @@ import { getCurrentWeather } from "../services/WeatherService";
 export default function CityWeather() {
   const { name } = useParams();
   const [weather, setWeather] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getCurrentWeather(name).then(setWeather);
+    getCurrentWeather(name)
+      .then(setWeather)
+      .catch((err) => setError(err.message));
   }, [name]);
+
+  if (error) return <p className="text-red-600">{error}</p>;
+
+  if (!weather) return <p>Loading {name} weather…</p>;
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{name}</h1>
+      <h1 className="text-3xl font-bold mb-4">{weather.name}</h1>
 
-      {weather && (
-        <div className="mt-4 bg-white p-4 rounded shadow">
-          <p className="text-lg">Temperature: {weather.main.temp}°C</p>
-          <p className="text-lg">Condition: {weather.weather[0].description}</p>
-        </div>
-      )}
+      <div className="bg-white p-6 rounded-xl shadow max-w-md space-y-2">
+        <p className="text-2xl font-semibold">
+          {Math.round(weather.main.temp)}°C
+        </p>
+        <p className="capitalize text-slate-600">
+          {weather.weather[0].description}
+        </p>
+        <p className="text-sm text-slate-500">
+          Humidity {weather.main.humidity}%
+        </p>
+      </div>
 
       <Link
         to={`/forecast/${name}`}
-        className="text-blue-600 underline mt-6 block"
+        className="block mt-6 text-blue-600 underline"
       >
-        View forecast
+        View 5-day forecast →
       </Link>
     </div>
   );
