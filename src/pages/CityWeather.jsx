@@ -23,6 +23,10 @@ export default function CityWeather() {
   if (error) return <p className="text-red-600">{error}</p>;
   if (!weather) return <p>Loading {name} weather…</p>;
 
+  const iconUrl = weather.weather?.[0]?.icon
+    ? `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
+    : null;
+
   return (
     <section>
       <div className="flex justify-between items-center mb-4">
@@ -37,17 +41,21 @@ export default function CityWeather() {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow max-w-md space-y-2">
-        <p className="text-2xl font-semibold">
-          {Math.round(weather.main.temp)}°C
-        </p>
-        <p className="capitalize text-slate-600">
-          {weather.weather[0].description}
-        </p>
-        <p className="text-sm text-slate-500">
-          Feels like {Math.round(weather.main.feels_like)}°C · Humidity{" "}
-          {weather.main.humidity}%
-        </p>
+      <div className="bg-white p-6 rounded-xl shadow max-w-md flex items-center gap-4">
+        {iconUrl && <img src={iconUrl} className="w-20 h-20" />}
+
+        <div className="space-y-1">
+          <p className="text-2xl font-semibold">
+            {Math.round(weather.main.temp)}°C
+          </p>
+          <p className="capitalize text-slate-600">
+            {weather.weather[0].description}
+          </p>
+          <p className="text-sm text-slate-500">
+            Feels like {Math.round(weather.main.feels_like)}°C · Humidity{" "}
+            {weather.main.humidity}%
+          </p>
+        </div>
       </div>
 
       <Link
