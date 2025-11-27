@@ -13,7 +13,7 @@ export default function CityWeather() {
   const [favorite, setFavorite] = useState(isFavorite(name));
 
   useEffect(() => {
-    // IMPORTANT FIX — reset state when city changes
+    // Important fix — reset state when city changes
     setWeather(null);
     setError(null);
 
