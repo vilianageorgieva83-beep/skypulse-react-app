@@ -12,11 +12,14 @@ export default function Forecast() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Important fix — reset state when city changes
+    setForecast([]);
+    setError(null);
+
     getForecast(normalizedCity)
       .then((res) => {
         const list = res.list || [];
 
-        // Group by day (YYYY-MM-DD)
         const groups = {};
         list.forEach((item) => {
           const day = item.dt_txt.split(" ")[0];
@@ -24,7 +27,6 @@ export default function Forecast() {
           groups[day].push(item);
         });
 
-        // Take the *midday forecast* for each day
         const daily = Object.values(groups).map((dayArr) => {
           const midday = dayArr.find((i) => i.dt_txt.includes("12:00:00"));
           return midday || dayArr[Math.floor(dayArr.length / 2)];
@@ -35,10 +37,11 @@ export default function Forecast() {
       .catch((err) => setError(err.message));
   }, [normalizedCity]);
 
+  // Error display
   if (error)
     return (
       <p className="text-red-600 font-semibold text-lg">
-        OpenWeather error 404: Not Found
+        This city could not be found! Please try again!
       </p>
     );
 
@@ -46,7 +49,7 @@ export default function Forecast() {
 
   return (
     <section>
-      <h1 className="text-3xl font-bold mb-4">
+      <h1 className="text-4xl font-bold tracking-tight mb-4">
         5-Day Forecast — {normalizedCity}
       </h1>
 

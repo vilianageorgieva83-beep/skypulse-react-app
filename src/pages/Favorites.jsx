@@ -53,7 +53,7 @@ export default function Favorites() {
             const normalized = normalizeCityName(city);
             const data = weatherData[city];
 
-            // icon & temp
+            // Icon & temp
             const icon = data?.weather?.[0]?.icon
               ? `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
               : null;
@@ -64,7 +64,7 @@ export default function Favorites() {
                 key={normalized}
                 className="bg-white p-4 rounded-xl shadow flex justify-between items-center"
               >
-                {/* LEFT SIDE: Icon + Temp + City */}
+                {/* Left: Icon + Temp + City */}
                 <div className="flex items-center gap-4">
                   {/* icon */}
                   {icon && (
@@ -93,7 +93,7 @@ export default function Favorites() {
                   </Link>
                 </div>
 
-                {/* REMOVE BUTTON */}
+                {/* Remove Button */}
                 <button
                   onClick={() => handleRemove(city)}
                   className="px-3 py-1 text-white bg-red-500 rounded text-sm shadow"

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { normalizeCityName } from "../utils/normalize";
+import logo from "../assets/weather/logo.png";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
@@ -20,14 +21,11 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between gap-4">
         {/* LOGO + BRAND */}
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-md">
-            <img
-              src="/logo.png"
-              alt="SkyPulse logo"
-              className="w-7 h-7 object-contain"
-            />
-          </div>
-
+          <img
+            src={logo}
+            alt="SkyPulse logo"
+            className="w-10 h-10 object-contain drop-shadow-[0_0_4px_rgba(0,0,0,0.35)]"
+          />
           <span className="text-3xl font-semibold tracking-tight">
             SkyPulse
           </span>

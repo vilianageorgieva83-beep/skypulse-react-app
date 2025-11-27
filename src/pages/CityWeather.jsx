@@ -6,29 +6,32 @@ import { normalizeCityName } from "../utils/normalize";
 
 export default function CityWeather() {
   const { name } = useParams();
-
-  // Normalize only for display
   const normalizedCity = normalizeCityName(name);
 
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
-  const [favorite, setFavorite] = useState(isFavorite(name)); // raw name
+  const [favorite, setFavorite] = useState(isFavorite(name));
 
   useEffect(() => {
+    // IMPORTANT FIX — reset state when city changes
+    setWeather(null);
+    setError(null);
+
     getCurrentWeather(normalizedCity)
-      .then(setWeather)
+      .then((data) => setWeather(data))
       .catch((e) => setError(e.message));
   }, [normalizedCity]);
 
   function handleToggleFavorite() {
-    const updated = toggleFavorite(name); // input (no normalization)
+    const updated = toggleFavorite(name);
     setFavorite(updated.includes(normalizedCity));
   }
 
+  // Error message
   if (error)
     return (
       <p className="text-red-600 font-semibold text-lg">
-        City not found. Please check the name and try again.
+        This city could not be found! Please try again!
       </p>
     );
 
@@ -41,7 +44,9 @@ export default function CityWeather() {
   return (
     <section>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">{normalizedCity}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+          {normalizedCity}
+        </h1>
 
         <button
           onClick={handleToggleFavorite}
@@ -65,10 +70,10 @@ export default function CityWeather() {
         )}
 
         <div className="space-y-1">
-          <p className="text-2xl font-semibold">
+          <p className="text-4xl font-bold tracking-tight">
             {Math.round(weather.main.temp)}°C
           </p>
-          <p className="capitalize text-slate-600">
+          <p className="capitalize text-slate-600 font-medium">
             {weather.weather[0].description}
           </p>
           <p className="text-sm text-slate-500">
