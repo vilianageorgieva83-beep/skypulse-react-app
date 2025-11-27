@@ -10,40 +10,55 @@ export default function Navbar() {
     e.preventDefault();
     if (!query.trim()) return;
 
-    // Normalize city name (Capital Letters Each Word)
     const normalized = normalizeCityName(query);
-
     navigate(`/city/${normalized}`);
     setQuery("");
   }
 
   return (
-    <nav className="bg-blue-700 text-white py-3 shadow-md">
-      <div className="max-w-5xl mx-auto px-4 flex items-center justify-between gap-4">
-        <Link
-          to="/"
-          className="text-2xl font-bold tracking-wide flex items-center gap-2"
-        >
-          <span className="text-3xl">🔵</span>
-          <span>SkyPulse</span>
+    <nav className="bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 shadow-lg">
+      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between gap-4">
+        {/* LOGO + BRAND */}
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-md">
+            <img
+              src="/logo.png"
+              alt="SkyPulse logo"
+              className="w-7 h-7 object-contain"
+            />
+          </div>
+
+          <span className="text-3xl font-semibold tracking-tight">
+            SkyPulse
+          </span>
         </Link>
 
+        {/* SEARCH BAR */}
         <form onSubmit={handleSearch} className="flex gap-2">
           <input
             type="text"
             placeholder="Search city..."
-            className="px-3 py-1 rounded text-black text-sm"
+            className="px-4 py-2 rounded-lg text-black text-sm w-44 sm:w-56 
+                       focus:outline-none focus:ring-2 focus:ring-sky-300"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="bg-white text-blue-700 font-semibold px-3 py-1 rounded text-sm">
+          <button
+            className="bg-white text-blue-700 font-semibold px-4 py-2 rounded-lg shadow 
+                       transition hover:bg-slate-200"
+          >
             Search
           </button>
         </form>
 
-        <div className="flex gap-4 text-sm">
-          <Link to="/">Home</Link>
-          <Link to="/favorites">Favorites</Link>
+        {/* NAV LINKS */}
+        <div className="flex items-center gap-5 text-sm font-medium">
+          <Link to="/" className="hover:text-yellow-200 transition">
+            Home
+          </Link>
+          <Link to="/favorites" className="hover:text-yellow-200 transition">
+            Favorites
+          </Link>
         </div>
       </div>
     </nav>
