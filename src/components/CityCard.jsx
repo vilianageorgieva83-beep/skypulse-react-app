@@ -4,15 +4,12 @@ import { isFavorite, toggleFavorite } from "../utils/Favorites";
 import { normalizeCityName } from "../utils/normalize";
 
 export default function CityCard({ city, data }) {
-  // Normalize only for display — NOT for toggleFavorite()
   const normalizedCity = normalizeCityName(city);
-
-  const [favorite, setFavorite] = useState(isFavorite(city)); // pass raw city!
+  const [favorite, setFavorite] = useState(isFavorite(city));
 
   function handleToggleFavorite(e) {
-    e.preventDefault(); // prevent link navigation
-
-    const updated = toggleFavorite(city); // 🔥 RAW city, no normalization here
+    e.preventDefault();
+    const updated = toggleFavorite(city);
     setFavorite(updated.includes(normalizedCity));
   }
 
@@ -28,24 +25,37 @@ export default function CityCard({ city, data }) {
       {/* FAVORITE STAR */}
       <button
         onClick={handleToggleFavorite}
-        className={`absolute top-4 right-4 text-2xl ${
-          favorite ? "text-yellow-400" : "text-gray-300"
-        }`}
+        className={`absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full shadow-md transition text-xl 
+          ${
+            favorite
+              ? "bg-yellow-300 text-white"
+              : "bg-slate-100 text-slate-400"
+          }`}
       >
         ★
       </button>
 
-      <h2 className="text-2xl font-bold text-blue-700">{normalizedCity}</h2>
+      <h2 className="text-3xl font-semibold text-blue-700 tracking-tight">
+        {normalizedCity}
+      </h2>
 
       {data ? (
-        <div className="flex items-center gap-3 mt-3">
-          {icon && <img src={icon} alt="Weather icon" className="w-14 h-14" />}
+        <div className="flex items-center gap-4 mt-4">
+          {icon && (
+            <div className="cloud-shape flex items-center justify-center">
+              <img
+                src={icon}
+                alt="Weather icon"
+                className="w-10 h-10 relative z-10"
+              />
+            </div>
+          )}
 
           <div>
-            <p className="text-3xl font-semibold">
+            <p className="text-4xl font-bold tracking-tight">
               {Math.round(data.main.temp)}°C
             </p>
-            <p className="capitalize text-slate-600 text-sm">
+            <p className="capitalize text-slate-600 text-sm font-medium">
               {data.weather[0].description}
             </p>
           </div>

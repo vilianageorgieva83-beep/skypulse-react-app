@@ -68,7 +68,13 @@ export default function Favorites() {
                 <div className="flex items-center gap-4">
                   {/* icon */}
                   {icon && (
-                    <img src={icon} alt="weather icon" className="w-8 h-8" />
+                    <div className="cloud-shape flex items-center justify-center">
+                      <img
+                        src={icon}
+                        alt="Weather icon"
+                        className="w-7 h-7 relative z-10"
+                      />
+                    </div>
                   )}
 
                   {/* temp */}

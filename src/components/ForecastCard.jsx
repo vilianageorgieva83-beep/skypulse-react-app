@@ -8,11 +8,13 @@ export default function ForecastCard({ item }) {
       <p className="text-xs text-slate-500 mb-1">{item.dt_txt}</p>
 
       {icon && (
-        <img
-          src={icon}
-          alt="forecast weather icon"
-          className="w-16 h-16 mx-auto"
-        />
+        <div className="cloud-shape mx-auto flex items-center justify-center">
+          <img
+            src={icon}
+            alt="forecast weather icon"
+            className="w-9 h-9 relative z-10"
+          />
+        </div>
       )}
 
       <p className="text-xl font-bold mt-2">{Math.round(item.main.temp)}°C</p>

@@ -55,7 +55,13 @@ export default function CityWeather() {
       {/* WEATHER BOX */}
       <div className="bg-white p-6 rounded-xl shadow max-w-md flex items-center gap-4">
         {iconUrl && (
-          <img src={iconUrl} className="w-20 h-20" alt="Weather icon" />
+          <div className="cloud-shape flex items-center justify-center">
+            <img
+              src={iconUrl}
+              alt="Weather icon"
+              className="w-12 h-12 relative z-10"
+            />
+          </div>
         )}
 
         <div className="space-y-1">

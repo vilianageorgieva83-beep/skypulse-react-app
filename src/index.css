@@ -22,3 +22,36 @@ p {
 small {
   @apply text-sm text-slate-200;
 }
+
+/* Compact cloud size */
+.cloud-shape {
+  position: relative;
+  background: #dbeafe;
+  width: 42px;
+  height: 26px;
+  border-radius: 18px;
+}
+
+/* Small top-left bubble */
+.cloud-shape::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #dbeafe;
+  border-radius: 50%;
+  top: -10px;
+  left: 2px;
+}
+
+/* Small top-right bubble */
+.cloud-shape::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #dbeafe;
+  border-radius: 50%;
+  top: -8px;
+  right: 1px;
+}
