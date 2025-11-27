@@ -35,7 +35,13 @@ export default function Forecast() {
       .catch((err) => setError(err.message));
   }, [normalizedCity]);
 
-  if (error) return <p className="text-red-600">{error}</p>;
+  if (error)
+    return (
+      <p className="text-red-600 font-semibold text-lg">
+        OpenWeather error 404: Not Found
+      </p>
+    );
+
   if (!forecast.length) return <p>Loading forecast...</p>;
 
   return (

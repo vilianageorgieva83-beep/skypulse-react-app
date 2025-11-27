@@ -50,11 +50,15 @@ export default function Hero() {
 
       {/* Hero Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-        <h1 className="text-4xl font-bold drop-shadow-md">
-          Real-time weather checker
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight drop-shadow-xl">
+          Weather, at a heartbeat. <span className="text-blue-400">💙</span>
         </h1>
-        <p className="mt-2 text-lg opacity-90">Explore now!</p>
-        <p className="text-sm opacity-80">
+
+        <p className="mt-4 text-3xl font-semibold opacity-100 drop-shadow">
+          Real-time weather checker
+        </p>
+
+        <p className="text-sm opacity-50 mt-2">
           Built with React, TailwindCSS and OpenWeather API.
         </p>
       </div>

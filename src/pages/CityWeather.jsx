@@ -25,7 +25,13 @@ export default function CityWeather() {
     setFavorite(updated.includes(normalizedCity));
   }
 
-  if (error) return <p className="text-red-600">{error}</p>;
+  if (error)
+    return (
+      <p className="text-red-600 font-semibold text-lg">
+        City not found. Please check the name and try again.
+      </p>
+    );
+
   if (!weather) return <p>Loading {normalizedCity} weather…</p>;
 
   const iconUrl = weather.weather?.[0]?.icon
