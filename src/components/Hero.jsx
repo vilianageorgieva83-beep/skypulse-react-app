@@ -51,7 +51,7 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
         <h1 className="text-5xl md:text-6xl font-bold tracking-tight drop-shadow-xl">
-          Weather, at a heartbeat. <span className="text-blue-400">💙</span>
+          Weather, at a heartbeat <span className="text-blue-400">💙</span>
         </h1>
 
         <p className="mt-4 text-3xl font-semibold opacity-100 drop-shadow">
