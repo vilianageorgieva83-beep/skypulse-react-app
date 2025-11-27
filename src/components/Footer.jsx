@@ -1,13 +1,11 @@
-import Footer from "./components/Footer";
-
-export default function Layout() {
+export default function Footer() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 max-w-6xl mx-auto px-4 py-6">
-        <Outlet />
-      </main>
-      <Footer /> {/* 👈 ADD THIS */}
-    </div>
+    <footer className="bg-gradient-to-r from-blue-600 to-sky-500 text-white py-4 mt-10">
+      <div className="max-w-6xl mx-auto px-4 text-center">
+        <p className="text-sm tracking-wide text-white/90">
+          © {new Date().getFullYear()} SkyPulse — Powered by OpenWeather API
+        </p>
+      </div>
+    </footer>
   );
 }
